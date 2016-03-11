@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Fresh Data - a Biodiversity Data Availability Monitor</title>
+    <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <link rel="stylesheet" href="https://rawgit.com/heyman/leaflet-areaselect/master/src/leaflet-areaselect.css"/>
+    <link rel="stylesheet" href="static/style.css"/>
+</head>
+<body>
+<h1>Fresh Data - a Biodiversity Data Availability Monitor*</h1>
+<p>*A prototype.</p>
+
+<p>The purpose of <a href="https://github.com/gimmefreshdata/freshdata">Fresh Data</a> is to discover and follow records in biodiversity archives that match specific geospatial, temporal, taxonomic and trait constraints. Archives include, but are not limited to,
+    <a href="http://gbif.org">GBIF</a>, <a href="https://idigbio.org">iDigBio</a> and <a
+      href="http://eol.org/traitbank">EOL TraitBank</a>. <p>Visit our <a href="https://github.com/gimmefreshdata/freshdata/wiki" target="_blank">wiki</a> for more information.</p>
+
+
+<div id="effechecka-selector"></div>
+
+<p>Include occurrences recorded after <input placeholder="enter start date (if any)"></input> and before <input placeholder="enter end date (if any)"></input>.</p>
+
+
+<div id="freshdata-occurrences">
+  <p>search status: (processing | ready)</p>
+  <p>Your search matched 15M records in total and 1M records since Dec 2015. The results where last updated on 6 March 2016. This search is followed by 10 people.<br/><button name="download" title="download all records matching this search">download all</button><button name="download_recent" title="download recent record matching this search">download recent</button><button name="follow" title="click this button to receive notification when new records are available">follow</button></p>
+  <table>
+    <caption>first 4 matching records in no particular order</caption>
+    <thead><tr><th>taxon path</th><th>lat</th><th>lng</th><th>first seen</th><th>source record</th><th>source archive doi</th></tr></thead>
+    <tbody>
+      <tr><td>Animalia | Aves | Bigus birdus</td><td>32.2</td><td>10.2</td><td>2014-12-12</td><td><a href="http://idigbio.org">record link</a></td><td>doi:1235</td></tr>
+      <tr><td>Animalia | Aves | Anas daffius</td><td>42.2</td><td>10.2</td><td>2015-01-14</td><td><a href="http://idigbio.org">record link</a></td><td>doi:5546</td></tr>
+      <tr><td>Animalia | Aves | Anas donaldus</td><td>22.2</td><td>10.4</td><td>2013-07-30</td><td><a href="http://idigbio.org">record link</a></td><td>doi:6652</td></tr>
+    <tr><td>Animalia | Aves | Tweetus tweetii</td><td>31.2</td><td>12.2</td><td>2015-11-20</td><td><a href="http://idigbio.org">record link</a></td><td>doi:4453</td></tr>
+    </tbody>
+  </table>  
+</div>
+
+<p>Want to know more? Please open <a href="https://github.com/gimmefreshdata/freshdata/issues/new">an issue</a> or yell really loudly. This project is supported by the <a href="http://eol.org">Encyclopedia of Life</a> and (partly) runs on <a
+        href="https://idigbio.org">iDigBio</a> servers.</p>
+<script src="https://rawgit.com/effechecka/effechecka.github.io/master/static/bundle.js"></script>
+<script src="https://rawgit.com/heyman/leaflet-areaselect/master/src/leaflet-areaselect.js"></script>
+</body>
+</html>
