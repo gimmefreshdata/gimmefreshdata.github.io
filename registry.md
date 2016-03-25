@@ -6,9 +6,9 @@ _This page is under development_
 
 Fresh Data uses the following archives:
 
-source | type | date | url  
+source | format | date | url  
  :--- | :--- | :--- | :--- 
- {% for source in site.data.sources %}[{{ source.name }}]({{ source.url }}) | _{{ source.archive_type }}_ | {{ source.archive_date }} | {{ source.archive_url }}
+ {% for source in site.data.sources %}[{{ source.name }}]({{ source.url }}) | _{{ source.archive_format }}_ | {{ source.archive_date }} | {{ source.archive_url }}
  {% endfor %}
 
 <br/>
