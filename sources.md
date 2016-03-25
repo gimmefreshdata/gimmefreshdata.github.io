@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Source Registry
+title: Archive Registry
 ---
 _This page is under development_
 
