@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+<ul>
+{% for source in site.data.sources %}
+  <li>
+    <a href="{{source.url}}">{{source.name}}</a> at {{source.url}}
+  </li>
+{% endfor %}
+</ul>
