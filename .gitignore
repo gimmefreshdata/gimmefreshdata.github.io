@@ -1,2 +1,5 @@
 .idea
 bundle.js
+_site
+.sass-cache
+.jekyll-metadat
