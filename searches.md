@@ -15,9 +15,6 @@ List of requested, active searches in no particular order.
   </thead>
 </table>
 
-<!--script src="http://www.effechecka.org/static/bundle.js"></script-->
-<script src="bundle.js"></script>
-
 <script>
 var init = function() {
   var req = xhr();
