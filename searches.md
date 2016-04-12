@@ -44,6 +44,7 @@ var init = function() {
              
               var query = '/?' + queryStrings.join('&');
               link.setAttribute('href', query);
+              link.setAttribute('target', '_blank');
               link.textContent = 'more info...';
               td.appendChild(link);
               tr.appendChild(td);
