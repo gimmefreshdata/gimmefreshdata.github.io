@@ -10,7 +10,7 @@ List of requested, active searches in no particular order.
       <th>status</th>
       <th>#records</th>
       <th>taxa</th>
-      <th>url</th>
+      <th></th>
     </tr>
   </thead>
 </table>
@@ -35,17 +35,17 @@ var init = function() {
               elem.textContent = monitor['recordCount'];
               tr.appendChild(elem);
               elem = document.createElement('td');
-              elem.textContent = monitor['taxonSelector'];
+              elem.textContent = monitor.selector['taxonSelector'];
               tr.appendChild(elem);
               var link = document.createElement('a');
-              var queryStrings = ['taxonSelector', 'traitSelector', 'wktString'].map(function(selector) { 
-                  return selector + '=' + encodeURIComponent(monitor[selector].replace(/\|/g,','));
+              var queryStrings = ['taxonSelector', 'traitSelector', 'wktString'].map(function(selector) {
+                  return selector + '=' + encodeURIComponent(monitor.selector[selector].replace(/\|/g,','));
               });
              
               var query = '/?' + queryStrings.join('&');
               link.setAttribute('href', query);
               link.setAttribute('target', '_blank');
-              link.textContent = 'more info...';
+              link.textContent = 'view';
               td.appendChild(link);
               tr.appendChild(td);
               document.getElementById('monitors').appendChild(tr);
