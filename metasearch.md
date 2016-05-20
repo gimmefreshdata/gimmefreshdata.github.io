@@ -25,7 +25,7 @@ related search | #matching records
 
 <br/>
 
-*Matching occurrences for searches*
+*Matching Occurrences for Searches*
 
 Download as csv.
 
