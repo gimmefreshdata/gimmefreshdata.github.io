@@ -240,3 +240,11 @@
         }
     }
 }
+
+th {
+  border-bottom:1px solid lightgray;
+}
+
+tr:nth-child(even) {
+  background: lightyellow;
+}

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Archive Registry
+title: Archives
 ---
 _This page is under development_
 
