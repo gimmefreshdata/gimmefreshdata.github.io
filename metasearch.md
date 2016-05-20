@@ -6,7 +6,7 @@ _This page is under development_
 
 Find out which active searches include occurrences matching the criteria specified below.
 
-##Specify criteria
+*Specify Criteria*
 
 Include map, taxon selector.
 
@@ -14,7 +14,7 @@ Include button to request usage report.
 
 Include usage report status.
 
-##Matching searches
+*Matching Searches*
 
 Download as csv.
 
@@ -25,7 +25,7 @@ related search | #matching records
 
 <br/>
 
-##Matching occurrences for searches
+*Matching occurrences for searches*
 
 Download as csv.
 
