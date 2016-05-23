@@ -15,6 +15,7 @@ Enter data source: ...
 Download as csv.
 
 (top 20 results below) 
+
 occurrence id | related search 
 :--- | :--- 
 id123 | [search x](http://gimmefreshdata.github.io/?taxonSelector=Insecta&traitSelector=&wktString=POLYGON%20((-77.54287719726562%2038.59755381474309%2C%20-77.54287719726562%2039.1833042481843%2C%20-76.55960083007812%2039.1833042481843%2C%20-76.55960083007812%2038.59755381474309%2C%20-77.54287719726562%2038.59755381474309)))  
