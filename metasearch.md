@@ -21,6 +21,8 @@ occurrence id | first added
 id 123 | 2016-01-01
 id 456 | 2015-01-04
 
+<br/>
+
 **Find Monitors for Occurrence Record**
 
 Enter data source: ...
