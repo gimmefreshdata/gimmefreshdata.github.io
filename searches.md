@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Active Searches
+title: Monitors
 ---
-List of requested, active searches in no particular order.
+List of occurrence record monitors in no particular order.
 
 <table id='monitors'>
   <thead>
