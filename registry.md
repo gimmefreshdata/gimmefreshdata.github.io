@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Archives
+permalink: "archives.html"
 ---
 _This page is under development_
 

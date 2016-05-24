@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Monitors
+permalink: "monitors.html"
 ---
 List of occurrence record monitors in no particular order.
 

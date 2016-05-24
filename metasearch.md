@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Data Usage
+permalink: "usage.html"
 ---
 _This page is under development_
 
