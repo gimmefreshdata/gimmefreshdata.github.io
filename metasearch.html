@@ -79,6 +79,7 @@ permalink: "usage.html"
                             elem = tr.appendChild(document.createElement('td'));
                             var link = elem.appendChild(document.createElement('a'));
                             link.setAttribute('href', monitorBaseUrl + '&id=' + encodeURIComponent(id));
+                            link.setAttribute('title', 'show related monitors in json format using API');
                             link.textContent = 'monitors.json';
                             document.querySelector('#occurrences').appendChild(tr);
                         }
