@@ -40,7 +40,6 @@ permalink: "usage.html"
         <thead>
         <tr>
             <th>occurrence id</th>
-            <th>related monitor</th>
         </tr>
         </thead>
     </table>
@@ -52,7 +51,6 @@ permalink: "usage.html"
             var baseUrl = getBaseUrl();
             var baseQuery = '?source=' + encodeURIComponent(source);
             var url = baseUrl + '/monitoredOccurrences.csv' + baseQuery;
-            var monitorBaseUrl = baseUrl + '/monitors' + baseQuery;
 
             var downloadLink = document.querySelector('#download').appendChild(document.createElement('a'));
             downloadLink.setAttribute('href', url);
@@ -76,11 +74,6 @@ permalink: "usage.html"
                                findMonitors();
                             });
                             elem.textContent = id;
-                            elem = tr.appendChild(document.createElement('td'));
-                            var link = elem.appendChild(document.createElement('a'));
-                            link.setAttribute('href', monitorBaseUrl + '&id=' + encodeURIComponent(id));
-                            link.setAttribute('title', 'show related monitors in json format using API');
-                            link.textContent = 'monitors.json';
                             document.querySelector('#occurrences').appendChild(tr);
                         }
                     });
