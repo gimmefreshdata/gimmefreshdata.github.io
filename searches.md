@@ -12,6 +12,7 @@ List of occurrence record monitors in no particular order.
       <th>#records</th>
       <th>taxa</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 </table>
@@ -28,7 +29,6 @@ var init = function() {
           if (Array.isArray(resp)) {
             resp.forEach(function(monitor) {
               var tr = document.createElement('tr');
-              var td = document.createElement('td');
               var elem = document.createElement('td');
               elem.textContent = monitor['status'];
               tr.appendChild(elem);
@@ -38,17 +38,29 @@ var init = function() {
               elem = document.createElement('td');
               elem.textContent = monitor.selector['taxonSelector'];
               tr.appendChild(elem);
-              var link = document.createElement('a');
-              var queryStrings = ['taxonSelector', 'traitSelector', 'wktString'].map(function(selector) {
-                  return selector + '=' + encodeURIComponent(monitor.selector[selector].replace(/\|/g,','));
-              });
-             
-              var query = '/?' + queryStrings.join('&');
-              link.setAttribute('href', query);
-              link.setAttribute('target', '_blank');
-              link.textContent = 'view';
-              td.appendChild(link);
-              tr.appendChild(td);
+
+              var queryBaseUrl = '';
+              var label = 'view';
+
+              var createLinkElem = function(queryBaseUrl, label) {
+                  var link = document.createElement('a');
+                  var queryStrings = ['taxonSelector', 'traitSelector', 'wktString'].map(function(selector) {
+                      return selector + '=' + encodeURIComponent(monitor.selector[selector].replace(/\|/g,','));
+                  });
+
+                  var query = queryBaseUrl + '?' + queryStrings.join('&');
+                  link.setAttribute('href', query);
+                  link.setAttribute('target', '_blank');
+                  link.textContent = label;
+                  var td = document.createElement('td');
+                  td.appendChild(link);
+                  return td;
+              }
+
+              tr.appendChild(createLinkElem('/', 'view'));
+              var updateElem = createLinkElem('http://apihack-c18.idigbio.org/update', 'update');
+              updateElem.setAttribute('style','visibility: hidden');
+              tr.appendChild(updateElem);
               document.getElementById('monitors').appendChild(tr);
             });
           }
