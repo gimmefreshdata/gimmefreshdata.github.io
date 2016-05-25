@@ -1,0 +1,105 @@
+---
+layout: default
+title: Data Usage
+permalink: "usage.html"
+---
+
+<p>Find out which occurrence records have one or more associated monitors. Also, find out which monitors are associated
+    with a specific occurrence record.</p>
+
+Monitored records shared by <select id='sourceSelector'>
+    <option>inaturalist</option>
+    <option>idigbio</option>
+    <option>gbif</option>
+</select>.
+
+<br/>
+<br/>
+
+<table id='occurrences'>
+    <caption id="download"><span>Up to 20 shown below. </span></caption>
+    <thead>
+    <tr>
+        <th>occurrence id</th>
+        <th>related monitors</th>
+    </tr>
+    </thead>
+</table>
+
+<script>
+    var init = function (source) {
+        var nodes = document.querySelectorAll('.search');
+        for(var index=0; index < nodes.length; index++) {
+            nodes[index].parentNode.removeChild(nodes[index]);
+        }
+
+
+        var baseUrl = 'http://apihack-c18.idigbio.org';
+        var baseQuery = '?source=' + encodeURIComponent(source);
+        var url = baseUrl + '/monitoredOccurrences.csv' + baseQuery;
+        var monitorBaseUrl = baseUrl + '/monitors' + baseQuery;
+
+        var downloadLink = document.querySelector('#download').appendChild(document.createElement('a'));
+        downloadLink.setAttribute('href', url);
+        downloadLink.setAttribute('class', 'search');
+        downloadLink.textContent = 'Download all as csv.';
+
+        var req = xhr();
+        if (req !== undefined) {
+            req.open('GET', url + '&limit=20', true);
+            req.onreadystatechange = function () {
+                if (req.readyState === 4) {
+                    if (req.status === 200) {
+                        var ids = req.responseText.split("\n");
+                        if (Array.isArray(ids)) {
+                            ids.slice(1).forEach(function (someId) {
+                                var id = someId.replace(/^"/,'').replace(/"$/,'');
+                                if (id.length > 0) {
+                                    var tr = document.createElement('tr');
+                                    tr.setAttribute('class', 'search');
+                                    var elem = tr.appendChild(document.createElement('td'));
+                                    elem.textContent = id;
+                                    elem = tr.appendChild(document.createElement('td'));
+                                    var link = elem.appendChild(document.createElement('a'));
+                                    link.setAttribute('href', monitorBaseUrl + '&id=' + encodeURIComponent(id));
+                                    link.textContent = 'related monitors';
+                                    document.querySelector('#occurrences').appendChild(tr);
+                                }
+                            });
+                        }
+                    }
+                }
+            };
+            req.send(null);
+        }
+    };
+
+    var xhr = function () {
+        var req = null;
+        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+            req = new XMLHttpRequest();
+        } else if ((typeof window !== 'undefined') && window.ActiveXObject) { //     IE
+            try {
+                req = new ActiveXObject('Msxml2.XMLHTTP');
+            } catch (e) {
+                try {
+                    req = new ActiveXObject('Microsoft.XMLHTTP');
+                } catch (e) {
+                }
+            }
+        }
+        return req;
+    };
+
+    window.addEventListener('load', function () {
+        init('inaturalist');
+        document.querySelector('#sourceSelector').addEventListener('change', function(e) {
+            init(e.target.value);
+        });
+    });
+
+    window.addEventListener('changed', function () {
+        init();
+    });
+
+</script>
