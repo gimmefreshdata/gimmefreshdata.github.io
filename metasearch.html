@@ -7,99 +7,125 @@ permalink: "usage.html"
 <p>Find out which occurrence records have one or more associated monitors. Also, find out which monitors are associated
     with a specific occurrence record.</p>
 
-Monitored records originating from <select id='sourceSelector'>
+<div id="download">Find monitored records originating from <select id='sourceSelector'>
     <option>inaturalist</option>
     <option>idigbio</option>
     <option>gbif</option>
 </select>.
+    <div></div>
+</div>
 
-<br/>
-<br/>
 
 <table id='occurrences'>
-    <caption id="download"><span>Up to 20 shown below. </span></caption>
     <thead>
     <tr>
-        <th>occurrence id</th>
+        <th>occurrence id (10 max)</th>
         <th>related monitors</th>
     </tr>
     </thead>
 </table>
 
-<script>
-    var init = function (source) {
-        var nodes = document.querySelectorAll('.search');
-        for(var index=0; index < nodes.length; index++) {
-            nodes[index].parentNode.removeChild(nodes[index]);
-        }
+<br/>
+<br/>
+
+<div id="download">Find monitors related to occurrence id <input id='monitorIdSelector' placeholder="enter occurrence id"> originating from <select
+        id='monitorSourceSelector'>
+    <option>inaturalist</option>
+    <option>idigbio</option>
+    <option>gbif</option>
+</select>.
 
 
-        var baseUrl = 'http://apihack-c18.idigbio.org';
-        var baseQuery = '?source=' + encodeURIComponent(source);
-        var url = baseUrl + '/monitoredOccurrences.csv' + baseQuery;
-        var monitorBaseUrl = baseUrl + '/monitors' + baseQuery;
+    <table id='monitors'>
+        <thead>
+        <tr>
+            <th>occurrence id</th>
+            <th>related monitor</th>
+        </tr>
+        </thead>
+    </table>
 
-        var downloadLink = document.querySelector('#download').appendChild(document.createElement('a'));
-        downloadLink.setAttribute('href', url);
-        downloadLink.setAttribute('class', 'search');
-        downloadLink.textContent = 'Download all as csv.';
 
-        var req = xhr();
-        if (req !== undefined) {
-            req.open('GET', url + '&limit=20', true);
-            req.onreadystatechange = function () {
-                if (req.readyState === 4) {
-                    if (req.status === 200) {
-                        var ids = req.responseText.split("\n");
-                        if (Array.isArray(ids)) {
-                            ids.slice(1).forEach(function (someId) {
-                                var id = someId.replace(/^"/,'').replace(/"$/,'');
-                                if (id.length > 0) {
-                                    var tr = document.createElement('tr');
-                                    tr.setAttribute('class', 'search');
-                                    var elem = tr.appendChild(document.createElement('td'));
-                                    elem.textContent = id;
-                                    elem = tr.appendChild(document.createElement('td'));
-                                    var link = elem.appendChild(document.createElement('a'));
-                                    link.setAttribute('href', monitorBaseUrl + '&id=' + encodeURIComponent(id));
-                                    link.textContent = 'related monitors';
-                                    document.querySelector('#occurrences').appendChild(tr);
-                                }
+    <script>
+        var findMonitoredOccurrences = function (source) {
+            removeElements('.search');
+            var baseUrl = getBaseUrl();
+            var baseQuery = '?source=' + encodeURIComponent(source);
+            var url = baseUrl + '/monitoredOccurrences.csv' + baseQuery;
+            var monitorBaseUrl = baseUrl + '/monitors' + baseQuery;
+
+            var downloadLink = document.querySelector('#download').appendChild(document.createElement('a'));
+            downloadLink.setAttribute('href', url);
+            downloadLink.setAttribute('class', 'search');
+            downloadLink.textContent = 'Download all as csv.';
+
+            var renderOccurrenceTable = function(response) {
+                var ids = response.split("\n");
+                if (Array.isArray(ids)) {
+                    ids.slice(1).forEach(function (someId) {
+                        var id = someId.replace(/^"/, '').replace(/"$/, '');
+                        if (id.length > 0) {
+                            var tr = document.createElement('tr');
+                            tr.setAttribute('class', 'search');
+                            var elem = tr.appendChild(document.createElement('td'));
+                            elem.setAttribute('class', 'occurrenceId');
+                            elem.setAttribute('title', 'click to find monitors');
+                            elem.addEventListener('click', function() {
+                               document.querySelector('#monitorIdSelector').value = id;
+                               document.querySelector('#monitorSourceSelector').value = source;
+                               findMonitors();
                             });
+                            elem.textContent = id;
+                            elem = tr.appendChild(document.createElement('td'));
+                            var link = elem.appendChild(document.createElement('a'));
+                            link.setAttribute('href', monitorBaseUrl + '&id=' + encodeURIComponent(id));
+                            link.textContent = 'monitors.json';
+                            document.querySelector('#occurrences').appendChild(tr);
                         }
-                    }
+                    });
                 }
             };
-            req.send(null);
-        }
-    };
 
-    var xhr = function () {
-        var req = null;
-        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-            req = new XMLHttpRequest();
-        } else if ((typeof window !== 'undefined') && window.ActiveXObject) { //     IE
-            try {
-                req = new ActiveXObject('Msxml2.XMLHTTP');
-            } catch (e) {
-                try {
-                    req = new ActiveXObject('Microsoft.XMLHTTP');
-                } catch (e) {
-                }
+            httpGet(url + '&limit=10', renderOccurrenceTable)
+        };
+
+        var getBaseUrl = function() {
+            return 'http://apihack-c18.idigbio.org';
+        };
+
+        var renderMonitors = function(resp) {
+            var monitors = JSON.parse(resp);
+            if (Array.isArray(monitors)) {
+                monitors.forEach(function(monitor) {
+                    var tr = document.createElement('tr');
+                    tr.setAttribute('class', 'monitorSearch');
+                    var occId = tr.appendChild(document.createElement('td'));
+                    occId.textContent = document.querySelector('#monitorIdSelector').value;
+                    tr.appendChild(createMonitorElem(monitor, '/', 'view'));
+                    document.querySelector('#monitors').appendChild(tr);
+                });
             }
-        }
-        return req;
-    };
+        };
 
-    window.addEventListener('load', function () {
-        init('inaturalist');
-        document.querySelector('#sourceSelector').addEventListener('change', function(e) {
-            init(e.target.value);
+        var findMonitors = function () {
+            removeElements('.monitorSearch');
+            var source = document.querySelector('#monitorSourceSelector').value;
+            var encSource = encodeURIComponent(source);
+            var id = document.querySelector('#monitorIdSelector').value;
+            var encId = encodeURIComponent(id);
+            httpGet(getBaseUrl() + '/monitors?source=' + encSource + '&id=' + encId, renderMonitors);
+        };
+
+        window.addEventListener('load', function () {
+            findMonitoredOccurrences('inaturalist');
+            findMonitors();
+
+            document.querySelector('#sourceSelector').addEventListener('change', function (e) {
+                findMonitoredOccurrences(e.target.value);
+            });
+
+            document.querySelector('#monitorSourceSelector').addEventListener('change', findMonitors);
+            document.querySelector('#monitorIdSelector').addEventListener('keyup', findMonitors);
         });
-    });
 
-    window.addEventListener('changed', function () {
-        init();
-    });
-
-</script>
+    </script>

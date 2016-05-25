@@ -1,0 +1,51 @@
+---
+layout: default
+title: Monitors
+permalink: "monitors.html"
+---
+List of occurrence record monitors in no particular order.
+
+<table id='monitors'>
+    <thead>
+    <tr>
+        <th>status</th>
+        <th>#records</th>
+        <th>taxa</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+</table>
+
+<script>
+    var init = function () {
+        var renderMonitors = function (responseText) {
+            var resp = JSON.parse(responseText);
+            if (Array.isArray(resp)) {
+                resp.forEach(function (monitor) {
+                    var tr = document.createElement('tr');
+                    var elem = document.createElement('td');
+                    elem.textContent = monitor['status'];
+                    tr.appendChild(elem);
+                    elem = document.createElement('td');
+                    elem.textContent = monitor['recordCount'];
+                    tr.appendChild(elem);
+                    elem = document.createElement('td');
+                    elem.textContent = monitor.selector['taxonSelector'];
+                    tr.appendChild(elem);
+
+                    tr.appendChild(createMonitorElem(monitor.selector, '/', 'view'));
+                    var updateElem = createMonitorElem(monitor.selector, 'http://apihack-c18.idigbio.org/update', 'update');
+                    updateElem.setAttribute('style', 'visibility: hidden');
+                    tr.appendChild(updateElem);
+                    document.getElementById('monitors').appendChild(tr);
+                });
+            }
+        };
+        httpGet('http://apihack-c18.idigbio.org/monitors', renderMonitors);
+    };
+
+    window.addEventListener('load', function () {
+        init();
+    });
+</script>
