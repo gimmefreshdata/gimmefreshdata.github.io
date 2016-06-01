@@ -7,7 +7,7 @@ permalink: "usage.html"
 <p>Find out which occurrence records have one or more associated monitors. Also, find out which monitors are associated
     with a specific occurrence record.</p>
 
-<div id="download">Find monitored records originating from <select id='sourceSelector'>
+<div id="download">Monitored records originating from <select id='sourceSelector'>
     <option>inaturalist</option>
     <option>idigbio</option>
     <option>gbif</option>
@@ -27,18 +27,23 @@ permalink: "usage.html"
 <br/>
 <br/>
 
-<div id="download">Find monitors related to occurrence id <input id='monitorIdSelector' placeholder="enter occurrence id"> originating from <select
-        id='monitorSourceSelector'>
-    <option>inaturalist</option>
-    <option>idigbio</option>
-    <option>gbif</option>
-</select>.
+<div id="download">Monitors related to occurrence id <input id='monitorIdSelector'
+                                                                 placeholder="enter occurrence id"> originating from
+    <select
+            id='monitorSourceSelector'>
+        <option>inaturalist</option>
+        <option>idigbio</option>
+        <option>gbif</option>
+    </select>.
 
 
     <table id='monitors'>
         <thead>
         <tr>
-            <th>occurrence id</th>
+            <th>link</th>
+            <th>taxonSelector</th>
+            <th>traitSelector</th>
+            <th>wktString</th>
         </tr>
         </thead>
     </table>
@@ -56,7 +61,7 @@ permalink: "usage.html"
             downloadLink.setAttribute('class', 'search');
             downloadLink.textContent = 'Download all as csv.';
 
-            var renderOccurrenceTable = function(response) {
+            var renderOccurrenceTable = function (response) {
                 var ids = response.split("\n");
                 if (Array.isArray(ids)) {
                     ids.slice(1).forEach(function (someId) {
@@ -67,10 +72,10 @@ permalink: "usage.html"
                             var elem = tr.appendChild(document.createElement('td'));
                             elem.setAttribute('class', 'occurrenceId');
                             elem.setAttribute('title', 'click to find monitors');
-                            elem.addEventListener('click', function() {
-                               document.querySelector('#monitorIdSelector').value = id;
-                               document.querySelector('#monitorSourceSelector').value = source;
-                               findMonitors();
+                            elem.addEventListener('click', function () {
+                                document.querySelector('#monitorIdSelector').value = id;
+                                document.querySelector('#monitorSourceSelector').value = source;
+                                findMonitors();
                             });
                             elem.textContent = id;
                             document.querySelector('#occurrences').appendChild(tr);
@@ -82,19 +87,28 @@ permalink: "usage.html"
             httpGet(url + '&limit=10', renderOccurrenceTable)
         };
 
-        var getBaseUrl = function() {
+        var getBaseUrl = function () {
             return 'http://apihack-c18.idigbio.org';
         };
 
-        var renderMonitors = function(resp) {
+        var renderMonitors = function (resp) {
             var monitors = JSON.parse(resp);
             if (Array.isArray(monitors)) {
-                monitors.forEach(function(monitor) {
+                monitors.forEach(function (monitor) {
                     var tr = document.createElement('tr');
                     tr.setAttribute('class', 'monitorSearch');
-                    var occId = tr.appendChild(document.createElement('td'));
-                    occId.textContent = document.querySelector('#monitorIdSelector').value;
                     tr.appendChild(createMonitorElem(monitor, '/', 'view'));
+                    var friendlyMonitor = ['taxonSelector', 'traitSelector', 'wktString'].reduce(function (obj,key) {
+                        var value = monitor[key];
+                        if (value === undefined || value.length == 0) {
+                            value = 'n/a';
+                        }
+                        obj[key] = value;
+                        return obj;
+                    }, {});
+                    tr.appendChild(document.createElement('td')).textContent = friendlyMonitor.taxonSelector;
+                    tr.appendChild(document.createElement('td')).textContent = friendlyMonitor.traitSelector;
+                    tr.appendChild(document.createElement('td')).textContent = friendlyMonitor.wktString;
                     document.querySelector('#monitors').appendChild(tr);
                 });
             }
