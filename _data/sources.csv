@@ -1,6 +1,6 @@
 update interval/cron expression,name,url,archive_format,archive_date,archive_md5,archive_url,archive_doi
-add cron expression,GBIF,http://gbif.org,DwCA,2015-06-16,3d60a6a80815be64856b341c9c011d3e,http://api.gbif.org/v1/occurrence/download/request/0000381-150615163101818.zip,http://doi.org/10.15468/dl.izel5b
-add cron expression,iDigBio,http://idigbio.org,DwCA,2015-06-02,9428d75d5c63fc0546bd5c49388a4a2b,https://s.idigbio.org/idigbio-static-downloads/idigbio.zip,
-add cron expression,iNaturalist,http://inaturalist.org,DwCA,2015-06-05,f8ca66f87811aa935f2ceb0b1c99fc8b,http://www.inaturalist.org/observations/gbif-observations-dwca.zip,
-add cron expression,iNaturalist,http://inaturalist.org,DwCA,2016-04-08,2fa16d8b3e68caab7407e87b7c14578d,http://www.inaturalist.org/observations/gbif-observations-dwca.zip,
-add cron expression,Reef Life Survey, http://reeflifesurvey.com/,DwCA,2009-09-21,,http://yetanotherarchivefromEli,
+,GBIF,http://gbif.org,DwCA,2015-06-16,3d60a6a80815be64856b341c9c011d3e,http://api.gbif.org/v1/occurrence/download/request/0000381-150615163101818.zip,http://doi.org/10.15468/dl.izel5b
+* * * * 1,iDigBio,http://idigbio.org,DwCA,2015-06-02,9428d75d5c63fc0546bd5c49388a4a2b,https://s.idigbio.org/idigbio-static-downloads/idigbio.zip,
+,iNaturalist,http://inaturalist.org,DwCA,2015-06-05,f8ca66f87811aa935f2ceb0b1c99fc8b,http://www.inaturalist.org/observations/gbif-observations-dwca.zip,
+* * * * 1,iNaturalist,http://inaturalist.org,DwCA,2016-04-08,2fa16d8b3e68caab7407e87b7c14578d,http://www.inaturalist.org/observations/gbif-observations-dwca.zip,
+,Reef Life Survey, http://reeflifesurvey.com/,DwCA,2009-09-21,,http://yetanotherarchivefromEli,
