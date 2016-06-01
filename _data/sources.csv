@@ -1,4 +1,4 @@
-update interval/cron expression,name,url,archive_format,archive_date,archive_md5,archive_url,archive_doi
+cron,name,url,archive_format,archive_date,archive_md5,archive_url,archive_doi
 ,GBIF,http://gbif.org,DwCA,2015-06-16,3d60a6a80815be64856b341c9c011d3e,http://api.gbif.org/v1/occurrence/download/request/0000381-150615163101818.zip,http://doi.org/10.15468/dl.izel5b
 * * * * 1,iDigBio,http://idigbio.org,DwCA,2015-06-02,9428d75d5c63fc0546bd5c49388a4a2b,https://s.idigbio.org/idigbio-static-downloads/idigbio.zip,
 ,iNaturalist,http://inaturalist.org,DwCA,2015-06-05,f8ca66f87811aa935f2ceb0b1c99fc8b,http://www.inaturalist.org/observations/gbif-observations-dwca.zip,
