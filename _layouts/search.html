@@ -8,4 +8,16 @@ layout: default
 
 <script src="http://www.effechecka.org/static/effechecka.js"></script>
 <!--<script src="effechecka.js"></script>-->
+<script>
+    window.addEventListener('load', function () {
+        effechecka.init({traits: [
+            { name: 'event date', value: 'eventDate', units: [
+                {name: 'date/time', value: 'datetime'}
+            ]},
+            { name: 'source', value: 'source', units: [
+                {name: 'no unit', value: 'string'}
+            ]}
+        ]});
+    });
+</script>
 
