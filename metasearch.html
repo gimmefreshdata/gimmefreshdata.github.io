@@ -54,18 +54,17 @@ permalink: "usage.html"
             removeElements('.search');
             var baseUrl = getBaseUrl();
             var baseQuery = '?source=' + encodeURIComponent(source);
-            var url = baseUrl + '/monitoredOccurrences.csv' + baseQuery;
+            var url = baseUrl + '/monitoredOccurrences.tsv' + baseQuery;
 
             var downloadLink = document.querySelector('#download').appendChild(document.createElement('a'));
             downloadLink.setAttribute('href', url);
             downloadLink.setAttribute('class', 'search');
-            downloadLink.textContent = 'Download all as csv.';
+            downloadLink.textContent = 'Download all as tsv file.';
 
             var renderOccurrenceTable = function (response) {
                 var ids = response.split("\n");
                 if (Array.isArray(ids)) {
-                    ids.slice(1).forEach(function (someId) {
-                        var id = someId.replace(/^"/, '').replace(/"$/, '');
+                    ids.slice(1).forEach(function (id) {
                         if (id.length > 0) {
                             var tr = document.createElement('tr');
                             tr.setAttribute('class', 'search');
