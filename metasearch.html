@@ -8,9 +8,6 @@ permalink: "usage.html"
     with a specific occurrence record.</p>
 
 <div id="download">Monitored records originating from <select id='sourceSelector'>
-    <option>inaturalist</option>
-    <option>idigbio</option>
-    <option>gbif</option>
 </select>.
     <div></div>
 </div>
@@ -31,9 +28,6 @@ permalink: "usage.html"
                                                                  placeholder="enter occurrence id"> originating from
     <select
             id='monitorSourceSelector'>
-        <option>inaturalist</option>
-        <option>idigbio</option>
-        <option>gbif</option>
     </select>.
 
 
@@ -116,11 +110,38 @@ permalink: "usage.html"
             var id = document.querySelector('#monitorIdSelector').value;
             var encId = encodeURIComponent(id);
             httpGet(getBaseUrl() + '/monitors?source=' + encSource + '&id=' + encId, renderMonitors);
-        };
+          };
+
+          var populateArchiveOptions = function(archiveNames) {
+            ['#sourceSelector','#monitorSourceSelector'].forEach(function(query) {
+              var selection = document.querySelector(query); 
+              archiveNames.forEach(function(archiveName) {
+                var someOption = selection.appendChild(document.createElement('option'));
+                someOption.textContent = archiveName;
+              });
+            });
+          };
+
+          var findArchiveNames = function() {
+            var handleArchives = function(resp) {
+              var obj = JSON.parse(resp);
+              var archives = [];
+              if (Array.isArray(obj.items)) {
+                archives = obj.items.map(function(repo) {
+                  return repo.name.replace(/^source-/,'');
+                });
+              }
+              if (archives.length > 0) {
+                populateArchiveOptions(archives);
+                findMonitoredOccurrences('inaturalist');
+                findMonitors();
+              }
+            }
+            httpGet('https://api.github.com/search/repositories?q=source+org:gimmefreshdata', handleArchives);
+          }
 
         window.addEventListener('load', function () {
-            findMonitoredOccurrences('inaturalist');
-            findMonitors();
+            findArchiveNames();
 
             document.querySelector('#sourceSelector').addEventListener('change', function (e) {
                 findMonitoredOccurrences(e.target.value);
