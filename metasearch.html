@@ -86,10 +86,6 @@ permalink: "usage.html"
             httpGet(url + '&limit=10', renderOccurrenceTable)
         };
 
-        var getBaseUrl = function () {
-            return 'http://apihack-c18.idigbio.org';
-        };
-
         var renderMonitors = function (resp) {
             var monitors = JSON.parse(resp);
             if (Array.isArray(monitors)) {

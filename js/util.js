@@ -1,3 +1,7 @@
+var getBaseUrl = function() {
+  return 'http://api.effechecka.org';
+}
+
 var createMonitorElem = function(monitorSelector, queryBaseUrl, label) {
     var link = document.createElement('a');
     var queryStrings = ['taxonSelector', 'traitSelector', 'wktString'].map(function(selector) {
