@@ -67,12 +67,12 @@ permalink: "usage.html"
                             tr.setAttribute('class', 'search');
                             var elem = tr.appendChild(document.createElement('td'));
                             elem.setAttribute('class', 'occurrenceId');
-                            elem.setAttribute('title', 'click to find monitors');
-                            elem.addEventListener('click', function () {
-                                document.querySelector('#monitorIdSelector').value = id;
-                                document.querySelector('#monitorSourceSelector').value = source;
-                                findMonitors();
-                            });
+                            //elem.setAttribute('title', 'click to find monitors');
+                            //elem.addEventListener('click', function () {
+                            //    document.querySelector('#monitorIdSelector').value = id;
+                            //    document.querySelector('#monitorSourceSelector').value = source;
+                            //    findMonitors();
+                            //});
                             elem.textContent = id;
                             var elemMonitor = tr.appendChild(document.createElement('td'));
                             if (elems.length > 1) {
