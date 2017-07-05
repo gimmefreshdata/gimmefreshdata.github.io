@@ -17,6 +17,7 @@ permalink: "usage.html"
     <thead>
     <tr>
         <th>occurrence id (10 max)</th>
+        <th>monitor uuid</th>
     </tr>
     </thead>
 </table>
@@ -31,7 +32,7 @@ permalink: "usage.html"
     </select>.
 
 
-    <table id='monitors'>
+    <!--table id='monitors'>
         <thead>
         <tr>
             <th>link</th>
@@ -40,7 +41,7 @@ permalink: "usage.html"
             <th>wktString</th>
         </tr>
         </thead>
-    </table>
+    </table-->
 
 
     <script>
@@ -58,7 +59,9 @@ permalink: "usage.html"
             var renderOccurrenceTable = function (response) {
                 var ids = response.split("\n");
                 if (Array.isArray(ids)) {
-                    ids.slice(1).forEach(function (id) {
+                    ids.slice(1).forEach(function (row) {
+                        var elems = row.split('\t');
+                        var id = elems[0];
                         if (id.length > 0) {
                             var tr = document.createElement('tr');
                             tr.setAttribute('class', 'search');
@@ -71,6 +74,10 @@ permalink: "usage.html"
                                 findMonitors();
                             });
                             elem.textContent = id;
+                            var elemMonitor = tr.appendChild(document.createElement('td'));
+                            if (elems.length > 1) {
+			        elemMonitor.textContent = elems[1];
+                            }
                             document.querySelector('#occurrences').appendChild(tr);
                         }
                     });
@@ -133,7 +140,7 @@ permalink: "usage.html"
               }
               if (archives.length > 0) {
                 populateArchiveOptions(archives);
-                findMonitoredOccurrences('inaturalist');
+                findMonitoredOccurrences('gbif');
                 findMonitors();
               }
             }
