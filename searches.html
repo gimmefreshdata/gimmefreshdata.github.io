@@ -8,9 +8,9 @@ List of occurrence record monitors in no particular order.
 <table id='monitors'>
     <thead>
     <tr>
+        <th>uuid</th>
         <th>status</th>
         <th>#records</th>
-        <th>uuid</th>
         <th>lastModified</th>
         <th>taxa</th>
         <th></th>
@@ -27,14 +27,13 @@ List of occurrence record monitors in no particular order.
                 resp.forEach(function (monitor) {
                     var tr = document.createElement('tr');
                     var elem = document.createElement('td');
-                    elem.textContent = monitor['status'];
+                    elem.textContent = monitor.selector['uuid'];
                     tr.appendChild(elem);
+                    elem = document.createElement('td');
+                    elem.textContent = monitor['status'];
                     tr.appendChild(elem);
                     elem = document.createElement('td');
                     elem.textContent = monitor['recordCount'];
-                    tr.appendChild(elem);
-                    elem = document.createElement('td');
-                    elem.textContent = monitor.selector['uuid'];
                     tr.appendChild(elem);
                     elem = document.createElement('td');
                     elem.textContent = new Date(monitor['lastModified']).toISOString();
